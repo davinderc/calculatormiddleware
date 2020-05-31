@@ -1,11 +1,9 @@
 package com.zuehlke.calculatormiddleware;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -17,7 +15,7 @@ class CalculatorMiddleWareApplicationTests {
 	private HelloWorldController controller = new HelloWorldController(new MockCalculatorService());
 
 	@Test
-	public void contextLoads() throws Exception {
+	public void contextLoads() {
 		assertThat(controller).isNotNull();
 	}
 
@@ -40,32 +38,28 @@ class CalculatorMiddleWareApplicationTests {
 	}
 
 	@Test
-	public void calculatorShouldRespondWithHashMap(){
+	public void calculatorShouldRespondWithList() {
 		//Given
 		var listOfNumbers = Arrays.asList(15, 23, 31);
-		var operands = new HashMap<String, List<Integer>>();
-		operands.put("summands", listOfNumbers);
 
 		//When
-		var response = controller.calculateSum(operands);
+		var response = controller.calculateSum(listOfNumbers);
 
 		//Then
-		assertThat(response).isInstanceOf(HashMap.class);
+		assertThat(response).isInstanceOf(CalculatorResult.class);
 	}
 
 	@Test
 	public void responseShouldHaveCalculatedSumAndSummands() {
 		//Given
 		var listOfNumbers = Arrays.asList(15, 23, 31);
-		var operands = new HashMap<String, List<Integer>>();
-		operands.put("summands", listOfNumbers);
 
 		//When
-		var response = controller.calculateSum(operands);
+		var response = controller.calculateSum(listOfNumbers);
 
 		//Then
-		assertThat(listOfNumbers).isIn(response.get("summands"));
-		assertThat(response.get("sum")).isEqualTo(10);
+		assertThat(listOfNumbers).isEqualTo(response.getOperands());
+		assertThat(response.getResult()).isEqualTo(10);
 	}
 
 	private class MockCalculatorService extends CalculatorService {

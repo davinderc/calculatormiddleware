@@ -1,12 +1,11 @@
 package com.zuehlke.calculatormiddleware;
 
-import java.util.HashMap;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class HelloWorldController {
@@ -33,12 +32,9 @@ public class HelloWorldController {
 
     @PostMapping("/cmw/summation")
     @ResponseBody
-    public Map<String, Object> calculateSum(@RequestBody Map <String, List<Integer>> operands) {
-        var result = calculatorService.getResult(operands.get("summands"));
-        var response = new HashMap<String, Object>();
-        response.put("summands", operands.get("summands"));
-        response.put("sum", result);
-        return response;
+    public CalculatorResult calculateSum(@RequestBody List<Integer> operands) {
+        var result = calculatorService.getResult(operands);
+        return new CalculatorResult(operands, result);
     }
 
 }

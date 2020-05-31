@@ -2,9 +2,14 @@ package com.zuehlke.calculatormiddleware;
 
 import java.util.List;
 
-public class CalculatorOperation {
+public class CalculatorResult {
     private List<Integer> operands;
     private Integer result;
+
+    public CalculatorResult(List<Integer> operands, Integer result) {
+        this.operands = operands;
+        this.result = result;
+    }
 
 
     public List<Integer> getOperands() {
