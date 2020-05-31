@@ -7,7 +7,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CalculatorControllerTests {
+public class CalculatorControllerTest {
 
     private final CalculatorController calculatorController = new CalculatorController(new MockCalculatorService());
 
