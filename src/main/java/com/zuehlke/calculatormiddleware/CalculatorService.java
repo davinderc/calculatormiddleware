@@ -6,10 +6,18 @@ import java.util.List;
 
 @Component
 public class CalculatorService {
-    public int getResult(List<Integer> operands) {
+    public int getSum(List<Integer> operands) {
         var result = 0;
-        for (int operand: operands) {
+        for (int operand : operands) {
             result += operand;
+        }
+        return result;
+    }
+
+    public int getProduct(List<Integer> operands) {
+        var result = 1;
+        for (int operand : operands) {
+            result *= operand;
         }
         return result;
     }

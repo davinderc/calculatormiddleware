@@ -36,9 +36,27 @@ public class CalculatorControllerTest {
         assertThat(response.getResult()).isEqualTo(10);
     }
 
+    @Test
+    public void responseShouldHaveCalculatedProductAndFactors() {
+        //Given
+        var listOfNumbers = Arrays.asList(1, 3, 23);
+
+        //When
+        var response = calculatorController.calculateProduct(listOfNumbers);
+
+        //Then
+        assertThat(response.getOperands()).isEqualTo(listOfNumbers);
+        assertThat(response.getResult()).isEqualTo(10);
+    }
+
     private static class MockCalculatorService extends CalculatorService {
         @Override
-        public int getResult(List<Integer> operands) {
+        public int getSum(List<Integer> operands) {
+            return 10;
+        }
+
+        @Override
+        public int getProduct(List<Integer> operands) {
             return 10;
         }
     }
