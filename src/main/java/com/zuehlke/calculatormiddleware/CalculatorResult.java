@@ -1,12 +1,17 @@
 package com.zuehlke.calculatormiddleware;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class CalculatorResult {
     private List<Integer> operands;
     private Integer result;
 
-    public CalculatorResult(List<Integer> operands, Integer result) {
+    @JsonCreator
+    public CalculatorResult(@JsonProperty("operands") List<Integer> operands,
+                            @JsonProperty("result") Integer result) {
         this.operands = operands;
         this.result = result;
     }
