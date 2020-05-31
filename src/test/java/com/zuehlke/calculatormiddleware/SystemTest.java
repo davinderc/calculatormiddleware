@@ -22,7 +22,7 @@ public class SystemTest {
     int randomServerPort;
 
     @Test
-    public void DummyTest() throws URISyntaxException {
+    public void shouldReturnSumOfNumbers() throws URISyntaxException {
         //Given
         var listOfNumbers = Arrays.asList(15, 23, 31);
         var expectedResult = 69;
