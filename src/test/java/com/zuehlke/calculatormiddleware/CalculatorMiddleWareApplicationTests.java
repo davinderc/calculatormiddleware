@@ -57,15 +57,15 @@ class CalculatorMiddleWareApplicationTests {
 	public void responseShouldHaveCalculatedSumAndSummands() {
 		//Given
 		var listOfNumbers = Arrays.asList(15, 23, 31);
-		var operands = new CalculatorOperation();
+		var operands = new HashMap<String, List<Integer>>();
+		operands.put("summands", listOfNumbers);
 
 		//When
-		var response = controller.calculateSum(listOfNumbers);
+		var response = controller.calculateSum(operands);
 
 		//Then
 		assertThat(listOfNumbers).isIn(response.get("summands"));
 		assertThat(response.get("sum")).isEqualTo(10);
-
 	}
 
 	private class MockCalculatorService extends CalculatorService {
