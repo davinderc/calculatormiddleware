@@ -12,7 +12,9 @@ import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Objects;
 
+import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 
@@ -36,5 +38,16 @@ public class SystemTest {
         //Then
         var extractedResult = Objects.requireNonNull(result.getBody()).getResult();
         assertThat(extractedResult).isEqualTo(expectedResult);
+    }
+
+    @Test
+    public void shouldReturnProductOfNumbers() {
+        given().
+                body(Arrays.asList(1, 3, 23)).
+                baseUri("http://localhost:" + randomServerPort).
+                contentType("application/json").
+                when().
+                post("/cmw/multiplication").
+                then().assertThat().body("result", equalTo(69));
     }
 }
