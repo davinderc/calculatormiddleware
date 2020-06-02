@@ -5,13 +5,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StopWatch;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.Timer;
 
 import static io.restassured.RestAssured.given;
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -78,15 +78,16 @@ public class SystemTest {
         var expectedResult = 69;
 
         //When
-        Timer responseTimer = new Timer();
+        var responseTimer = new StopWatch();
+        responseTimer.start();
         ResponseEntity<CalculatorResult> result = new RestTemplate().postForEntity(
                 new URI(baseUriString + randomServerPort + summationEndpoint),
                 new HttpEntity<>(listOfNumbers),
                 CalculatorResult.class);
 
-        // TODO: implement response time recording using RestTemplate API (similar to rest-assured above).
         //Then
-        //var extractedResult = Objects.requireNonNull(result.getBody()).getResult();
-        //assertThat(extractedResult).isEqualTo(expectedResult);
+        responseTimer.stop();
+        var requestResponseTime = responseTimer.getTotalTimeMillis();
+        assertThat(requestResponseTime).isLessThan(500);
     }
 }
