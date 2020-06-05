@@ -14,7 +14,6 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import static io.restassured.RestAssured.given;
-import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.lessThan;
@@ -61,18 +60,18 @@ public class SystemTest {
     }
 
     @Test
-    public void multiplicationResponseTimeShouldBeLessThan1s() {
+    public void multiplicationResponseTimeShouldBeLessThan500ms() {
         given().
                 body(Arrays.asList(1, 3, 23)).
                 baseUri(baseUriString + randomServerPort).
                 contentType(contentTypeJson).
                 when().
                 post(multiplicationEndpoint).
-                then().time(lessThan(1L), SECONDS);
+                then().time(lessThan(500L));
     }
 
     @Test
-    public void summationResponseTimeShouldBeLessThan1s() throws URISyntaxException {
+    public void summationResponseTimeShouldBeLessThan500ms() throws URISyntaxException {
         //Given
         var listOfNumbers = Arrays.asList(15, 23, 31);
         var expectedResult = 69;
